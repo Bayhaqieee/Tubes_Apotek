@@ -1,6 +1,6 @@
 <?php
 require 'functions.php';
-$obat = query("SELECT * FROM obat ORDER BY id_obat ASC "); // ORDER BY id ASC(mengurutkan dari id paling kecil ke besar) | DESC(mengurutkan dari id paling besar ke kecil)
+$obat = query("SELECT * FROM obat ORDER BY nama_obat ASC "); // ORDER BY ASC(mengurutkan dari paling kecil ke besar) | DESC(mengurutkan dari id paling besar ke kecil)
 
 // jika tombol cari di klik
 if(isset($_POST["cari"])) {
@@ -16,8 +16,8 @@ if(isset($_POST["cari"])) {
     <title>Halaman Admin</title>
 </head>
 <body>
-    <h1>Daftar Kru Mugiwara</h1>
-    <a href="create.php">Tambah data Kru Mugiwara</a>
+    <h1>Daftar obat-obat yang di jual di apotek</h1>
+    <a href="create.php">Tambah obat baru</a>
     <br><br>
     <form action="" method="post" >
         <input type="text" name="keyword" size="35" autofocus 
@@ -40,8 +40,8 @@ if(isset($_POST["cari"])) {
         <tr>
             <td><?= $i; ?></td>
             <td>
-                <a href="update.php?id=<?= $o["id_obat"]; ?>" >ubah</a> |
-                <a href="delete.php?id=<?= $o["id_obat"]; ?>" onclick="return confirm('yakin?');">hapus</a>
+                <a href="update.php?id_obat=<?= $o["id_obat"]; ?>" >ubah</a> |
+                <a href="delete.php?id_obat=<?= $o["id_obat"]; ?>" onclick="return confirm('yakin?');">hapus</a>
             </td>
             <td><?= $o["nama_obat"]; ?></td>
             <td><?= $o["harga_obat"]; ?></td>

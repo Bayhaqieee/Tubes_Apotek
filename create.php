@@ -29,10 +29,10 @@ if( isset($_POST["submit"])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah data kru</title>
+    <title>Tambah data obat</title>
 </head>
 <body>
-    <h1>Tambah data kru Topi Jerami</h1>
+    <h1>Tambah data Obat</h1>
     <form action="" method="post" enctype="multipart/form-data" > 
         <!-- enctype="multipart/form-data" 
         digunakan untuk mengelola dua type, 
@@ -42,24 +42,20 @@ if( isset($_POST["submit"])) {
         dan file itu sendiri tidak dikelola) -->
         <ul>
             <li>
-                <label for="nama">Nama : </label>
-                <input type="text" name="nama" id="nama" required>
+                <label for="nama_obat">Nama Obat: </label>
+                <input type="text" name="nama_obat" id="nama_obat" required>
             </li>
             <li>
-                <label for="bounty">Bounty : </label>
-                <input type="text" name="bounty" id="bounty" required>
+                <label for="harga_obat">Harga Obat: </label>
+                <input type="number" name="harga_obat" id="harga_obat" required>
             </li>
             <li>
-                <label for="pangkat">Pangkat : </label>
-                <input type="text" name="pangkat" id="pangkat" required>
+                <label for="stok_obat">Stok Obat: </label>
+                <input type="number" name="stok_obat" id="stok_obat" required>
             </li>
             <li>
-                <label for="kekuatan">Kekuatan : </label>
-                <input type="text" name="kekuatan" id="kekuatan" required>
-            </li>
-            <li>
-                <label for="gambar">Gambar : </label>
-                <input type="file" name="gambar" id="gambar" required>
+                <label for="jenis_obat">Jenis Obat: </label>
+                <input type="text" name="jenis_obat" id="jenis_obat" placeholder="obat keras/bebas/bebas terbatas" required>
             </li>
             <li>
                 <button type="submit" name="submit">Create data!</button>

@@ -46,7 +46,7 @@ function update($data)
     $id = $data["id_obat"];
     $nama = htmlspecialchars($data["nama_obat"]);
     $harga = htmlspecialchars($data["harga_obat"]);
-    $stok = htmlspecialchars($data["stok"]);
+    $stok = htmlspecialchars($data["stok_obat"]);
     $jenis = htmlspecialchars($data["jenis_obat"]);
 
     //query update data

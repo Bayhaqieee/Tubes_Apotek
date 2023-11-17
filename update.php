@@ -2,10 +2,10 @@
 require 'functions.php';
 
 // ambil data di URL
-$id = $_GET["id"];
+$id = $_GET["id_obat"];
 
 // query data kru berdasarkan id
-$kru = query("SELECT * FROM crew WHERE id=$id")[0];
+$obat = query("SELECT * FROM obat WHERE id_obat=$id")[0];
 
 // cek apakah tombol submit sudah ditekan atau belum
 if( isset($_POST["submit"])) {
@@ -35,36 +35,28 @@ if( isset($_POST["submit"])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update data kru</title>
+    <title>Update data obat</title>
 </head>
 <body>
-    <h1>Update data kru Topi Jerami</h1>
+    <h1>Update data obat</h1>
     <form action="" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="<?= $kru["id"]; ?>">
-        <input type="hidden" name="gambarLama" value="<?= $kru["gambar"]; ?>">
+        <input type="hidden" name="id_obat" value="<?= $obat["id_obat"]; ?>">
         <ul>
             <li>
-                <label for="nama">Nama : </label>
-                <input type="text" name="nama" id="nama" required value="<?= $kru["nama"]; ?>">
+                <label for="nama_obat">Nama Obat: </label>
+                <input type="text" name="nama_obat" id="nama_obat" required value="<?= $obat["nama_obat"]; ?>">
             </li>
             <li>
-                <label for="bounty">Bounty : </label>
-                <input type="text" name="bounty" id="bounty" required value="<?= $kru["bounty"]; ?>">
+                <label for="harga_obat">Harga Obat: </label>
+                <input type="number" name="harga_obat" id="harga_obat" required value="<?= $obat["harga_obat"]; ?>">
             </li>
             <li>
-                <label for="pangkat">Pangkat : </label>
-                <input type="text" name="pangkat" id="pangkat" required value="<?= $kru["pangkat"]; ?>" >
+                <label for="stok_obat">Stok Obat: </label>
+                <input type="number" name="stok_obat" id="stok_obat" required value="<?= $obat["stok_obat"]; ?>" >
             </li>
             <li>
-                <label for="kekuatan">Kekuatan : </label>
-                <input type="text" name="kekuatan" id="kekuatan" required value="<?= $kru["kekuatan"]; ?>" >
-            </li>
-            <li>
-                <label for="gambar">Gambar : </label>
-                <br>
-                <img src="img/<?= $kru['gambar'] ?>" width="75" height="75" alt="">
-                <br>
-                <input type="file" name="gambar" id="gambar" >
+                <label for="jenis_obat">Jenis Obat: </label>
+                <input type="text" name="jenis_obat" id="jenis_obat" placeholder="Obat Keras/Bebas/Bebas terbatas" required value="<?= $obat["jenis_obat"]; ?>" >
             </li>
             <li>
                 <button type="submit" name="submit">Update data!</button>

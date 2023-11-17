@@ -1,7 +1,7 @@
 <?php
     require 'functions.php';
     // ambil data di URL
-    $id = $_GET["id"];
+    $id = $_GET["id_obat"];
 
     if(delete($id) > 0) {
         echo "
