@@ -5,7 +5,7 @@ require 'functions.php';
 $id = $_GET["id_obat"];
 
 // query data kru berdasarkan id
-$obat = query("SELECT * FROM obat WHERE id_obat=$id")[0];
+$obat = query("SELECT * FROM obat WHERE id_obat = $id")[0];
 
 // cek apakah tombol submit sudah ditekan atau belum
 if( isset($_POST["submit"])) {
@@ -15,14 +15,14 @@ if( isset($_POST["submit"])) {
         echo "
             <script>
                 alert('data berhasil diubah!');
-                document.location.href = 'index.php';
+                document.location.href = 'obat.php';
             </script>
             ";
     } else {
         echo "
             <script>
                 alert('data gagal diubah!');
-                document.location.href = 'index.php';
+                document.location.href = 'obat.php';
             </script>
             ";
     }

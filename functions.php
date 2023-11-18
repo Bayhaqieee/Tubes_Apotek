@@ -52,13 +52,12 @@ function update($data)
     //query update data
     $query = "UPDATE obat SET
                 nama_obat = '$nama',
-                harga_obat = '$harga',
-                stok_obat = '$stok',
-                jenis_obat = '$jenis',
+                harga_obat = $harga,
+                stok_obat = $stok,
+                jenis_obat = '$jenis'
             WHERE id_obat = $id
             ";
     mysqli_query($conn, $query);
-
     return mysqli_affected_rows($conn);
 }
 
