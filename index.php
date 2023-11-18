@@ -24,6 +24,9 @@
                     <li class="nav-item ps-3 pe-3">
                         <a class="nav-link " href="obat.php">Kelola Obat</a>
                     </li>
+                    <li class="nav-item ps-3 pe-3">
+                        <a class="nav-link " href="beli.php">Laporan Pembelian</a>
+                    </li>
                 </ul>
             </div>
         </div>
