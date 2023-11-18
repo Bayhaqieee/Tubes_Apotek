@@ -1,5 +1,5 @@
 <?php
-require 'functions.php';
+require 'obat_functions.php';
 $obat = query("SELECT * FROM obat ORDER BY nama_obat ASC "); // ORDER BY ASC(mengurutkan dari paling kecil ke besar) | DESC(mengurutkan dari id paling besar ke kecil)
 
 // jika tombol cari di klik
@@ -48,7 +48,7 @@ if (isset($_POST["cari"])) {
     <!-- content  -->
     <div class="container">
         <h1 class="mt-3 mb-3">Daftar obat</h1>
-        <a class="btn btn-outline-success mb-3" href="create.php"><i class="bi bi-plus-square-fill"></i> Tambah obat baru</a>
+        <a class="btn btn-outline-success mb-3" href="obat_create.php"><i class="bi bi-plus-square-fill"></i> Tambah obat baru</a>
 
         <!-- search -->
         <div class="row">
@@ -81,8 +81,8 @@ if (isset($_POST["cari"])) {
                     <tr>
                         <td><?= $i; ?></td>
                         <td>
-                            <a class="btn btn-info mb-1" href="update.php?id_obat=<?= $o["id_obat"]; ?>"><i class="bi bi-pencil"></i></a>
-                            <a class="btn btn-danger mb-1" href="delete.php?id_obat=<?= $o["id_obat"]; ?>" onclick="return confirm('yakin?');"><i class="bi bi-trash"></i></a>
+                            <a class="btn btn-info mb-1" href="obat_update.php?id_obat=<?= $o["id_obat"]; ?>"><i class="bi bi-pencil"></i></a>
+                            <a class="btn btn-danger mb-1" href="obat_delete.php?id_obat=<?= $o["id_obat"]; ?>" onclick="return confirm('yakin?');"><i class="bi bi-trash"></i></a>
                         </td>
                         <td><?= $o["nama_obat"]; ?></td>
                         <td><?= $o["harga_obat"]; ?></td>
@@ -96,41 +96,6 @@ if (isset($_POST["cari"])) {
     </div>
     <!-- table obat end  -->
     <!-- content end  -->
-
-    <!-- 
-    <a href="create.php">Tambah obat baru</a>
-    <br><br>
-    <form action="" method="post">
-        <input type="text" name="keyword" size="35" autofocus placeholder="Masukkan keyword pencarian" autocomplete="off">
-        <button type="submit" name="cari">Cari!</button>
-    </form>
-    <br>
-    <table border="1" cellpadding="10" cellspacing="0">
-        <tr>
-            <th>No.</th>
-            <th>Aksi</th>
-            <th>Nama Obat</th>
-            <th>Harga</th>
-            <th>Stok</th>
-            <th>Jenis</th>
-        </tr>
-
-        <?php $i = 1; ?>
-        <?php foreach ($obat as $o) : ?>
-            <tr>
-                <td><?= $i; ?></td>
-                <td>
-                    <a href="update.php?id_obat=<?= $o["id_obat"]; ?>">ubah</a> |
-                    <a href="delete.php?id_obat=<?= $o["id_obat"]; ?>" onclick="return confirm('yakin?');">hapus</a>
-                </td>
-                <td><?= $o["nama_obat"]; ?></td>
-                <td><?= $o["harga_obat"]; ?></td>
-                <td><?= $o["stok_obat"]; ?></td>
-                <td><?= $o["jenis_obat"]; ?></td>
-            </tr>
-            <?php $i++; ?>
-        <?php endforeach; ?>
-    </table> -->
 
     <!-- script js  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
