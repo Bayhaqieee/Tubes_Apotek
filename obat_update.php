@@ -1,5 +1,5 @@
 <?php
-require 'obat_functions.php';
+require 'functions.php';
 
 // ambil data di URL
 $id = $_GET["id_obat"];

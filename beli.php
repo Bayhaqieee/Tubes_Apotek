@@ -1,10 +1,10 @@
 <?php
 require 'functions.php';
-$obat = query("SELECT * FROM obat ORDER BY nama_obat ASC "); // ORDER BY ASC(mengurutkan dari paling kecil ke besar) | DESC(mengurutkan dari id paling besar ke kecil)
+$beli = query("SELECT * FROM beli ORDER BY tgl_beli ASC "); // ORDER BY ASC(mengurutkan dari paling kecil ke besar) | DESC(mengurutkan dari id paling besar ke kecil)
 
 // jika tombol cari di klik
 if (isset($_POST["cari"])) {
-    $obat = search($_POST["keyword"]);
+    $beli = searchBeli($_POST["keyword"]);
 }
 ?>
 <!doctype html>
@@ -13,7 +13,7 @@ if (isset($_POST["cari"])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Daftar Obat</title>
+    <title>Daftar Transaksi</title>
 
     <!-- bootstrap  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -37,10 +37,10 @@ if (isset($_POST["cari"])) {
                         <a class="nav-link " aria-current="page" href="index.php">Home</a>
                     </li>
                     <li class="nav-item ps-3 pe-3">
-                        <a class="nav-link active" href="obat.php">Kelola Obat</a>
+                        <a class="nav-link " href="obat.php">Kelola Obat</a>
                     </li>
                     <li class="nav-item ps-3 pe-3">
-                        <a class="nav-link " href="beli.php">Laporan Pembelian</a>
+                        <a class="nav-link active" href="beli.php">Laporan Pembelian</a>
                     </li>
                 </ul>
             </div>
@@ -50,15 +50,14 @@ if (isset($_POST["cari"])) {
 
     <!-- content  -->
     <div class="container">
-        <h1 class="mt-3 mb-3">Daftar obat</h1>
-        <a class="btn btn-outline-success mb-3" href="obat_create.php"><i class="bi bi-plus-square-fill"></i> Tambah obat baru</a>
+        <h1 class="mt-3 mb-3">Daftar Transaksi Pembelian Obat</h1>
 
         <!-- search -->
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <form action="" method="post">
                     <div class="input-group mb-3">
-                        <input type="text" name="keyword" class="form-control" placeholder="Masukkan keyword pencarian" autocomplete="off">
+                        <input type="text" name="keyword" class="form-control" placeholder="Masukkan tahun-bulan-tanggal dalam angka" autocomplete="off">
                         <button class="btn btn-warning" type="submit" name="cari">Cari</button>
                     </div>
                 </form>
@@ -66,38 +65,31 @@ if (isset($_POST["cari"])) {
         </div>
         <!-- search end  -->
 
-        <!-- table obat  -->
+        <!-- table beli  -->
         <table class="table table-striped table-hover table-bordered text-center">
             <thead>
                 <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col">Tanggal</th>
+                    <th scope="col">Nama Pembeli</th>
                     <th scope="col">Nama Obat</th>
-                    <th scope="col">Harga</th>
-                    <th scope="col">Stok</th>
-                    <th scope="col">Jenis</th>
+                    <th scope="col">Jumlah Pembelian</th>
+                    <th scope="col">Total harga</th>
                 </tr>
             </thead>
             <tbody>
-                <?php $i = 1; ?>
-                <?php foreach ($obat as $o) : ?>
+                <?php foreach ($beli as $b) : ?>
                     <tr>
-                        <td><?= $i; ?></td>
-                        <td>
-                            <a class="btn btn-info mb-1" href="obat_update.php?id_obat=<?= $o["id_obat"]; ?>"><i class="bi bi-pencil"></i></a>
-                            <a class="btn btn-danger mb-1" href="obat_delete.php?id_obat=<?= $o["id_obat"]; ?>" onclick="return confirm('yakin?');"><i class="bi bi-trash"></i></a>
-                        </td>
-                        <td><?= $o["nama_obat"]; ?></td>
-                        <td><?= $o["harga_obat"]; ?></td>
-                        <td><?= $o["stok_obat"]; ?></td>
-                        <td><?= $o["jenis_obat"]; ?></td>
+                        <td><?= $b["tgl_beli"]; ?></td>
+                        <td><?= namaPembeli($b["id_pembeli"]); ?></td>
+                        <td><?= namaObat($b["id_obat"]);?></td>
+                        <td><?= $b["jml_beli"]; ?></td>
+                        <td><?= totalHarga($b["id_obat"]); ?></td>
                     </tr>
-                    <?php $i++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
-    <!-- table obat end  -->
+    <!-- table beli end  -->
     <!-- content end  -->
 
     <!-- script js  -->
