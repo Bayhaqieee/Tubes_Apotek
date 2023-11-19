@@ -81,16 +81,16 @@ function namaObat($id_obat)
                 JOIN obat ON beli.id_obat = obat.id_obat
                 WHERE beli.id_obat = $id_obat;
             ";
-    $result = mysqli_query($conn,$query);
+    $result = mysqli_query($conn, $query);
     $nama_obat = "";
-    if($result) {
-        while($row = mysqli_fetch_assoc($result)) {
-            if($row) {
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            if ($row) {
                 $nama_obat = $row['nama_obat'];
             }
         }
-    }else {
-        echo "Query error" .mysqli_error($conn);
+    } else {
+        echo "Query error" . mysqli_error($conn);
     }
 
     return $nama_obat;
@@ -104,19 +104,42 @@ function namaPembeli($id_pembeli)
                 JOIN pembeli ON beli.id_pembeli = pembeli.id_pembeli
                 WHERE beli.id_pembeli = $id_pembeli;
             ";
-    $result = mysqli_query($conn,$query);
+    $result = mysqli_query($conn, $query);
     $nama_pembeli = "";
-    if($result) {
-        while($row = mysqli_fetch_assoc($result)) {
-            if($row) {
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            if ($row) {
                 $nama_pembeli = $row['nama_pembeli'];
             }
         }
-    }else {
-        echo "Query error" .mysqli_error($conn);
+    } else {
+        echo "Query error" . mysqli_error($conn);
     }
 
     return $nama_pembeli;
+}
+
+function namaPegawai($id_pegawai)
+{
+    global $conn;
+    $query = "SELECT pegawai.nama_pegawai 
+                FROM beli
+                JOIN pegawai ON beli.id_pegawai = pegawai.id_pegawai
+                WHERE beli.id_pegawai = $id_pegawai;
+            ";
+    $result = mysqli_query($conn, $query);
+    $nama_pegawai = "";
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            if ($row) {
+                $nama_pegawai = $row['nama_pegawai'];
+            }
+        }
+    } else {
+        echo "Query error" . mysqli_error($conn);
+    }
+
+    return $nama_pegawai;
 }
 
 function totalHarga($id_obat)
@@ -151,3 +174,36 @@ function searchBeli($keyword)
             ";
     return query($query);
 }
+
+// functions.php
+function getIdPegawaiFromSession() {
+    if (isset($_SESSION["username"])) {
+        global $conn;
+        $username = $_SESSION['username'];
+        
+        // Ambil id_pegawai dari tabel pegawai berdasarkan username
+        $query = "SELECT id_pegawai FROM pegawai WHERE nama_pegawai = '$username'";
+        $result = mysqli_query($conn, $query);
+
+        if ($row = mysqli_fetch_assoc($result)) {
+            return $row['id_pegawai'];
+        }
+    }
+    return null;
+}
+
+function rekap($id) {
+    global $conn;
+
+    $id_pegawai = getIdPegawaiFromSession();
+
+    if ($id_pegawai !== null) {
+        $query_update = "UPDATE beli SET id_pegawai = $id_pegawai WHERE id_beli = $id";
+        mysqli_query($conn, $query_update);
+
+        return mysqli_affected_rows($conn);
+    }
+    return 0;
+}
+
+

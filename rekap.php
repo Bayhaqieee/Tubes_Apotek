@@ -5,20 +5,18 @@ if (!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user
     exit;
 }
 require 'functions.php';
-$beli = query("SELECT * FROM beli ORDER BY tgl_beli DESC "); // ORDER BY ASC(mengurutkan dari paling kecil ke besar) | DESC(mengurutkan dari id paling besar ke kecil)
 
-// jika tombol cari di klik
-if (isset($_POST["cari"])) {
-    $beli = searchBeli($_POST["keyword"]);
-}
+$rekap = query("SELECT * FROM beli ORDER BY tgl_beli DESC "); // ORDER BY ASC(mengurutkan dari paling kecil ke besar) | DESC(mengurutkan dari id paling besar ke kecil)
+
 ?>
+
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Daftar Transaksi</title>
+    <title>Tambah Rekap Pembelian</title>
 
     <!-- bootstrap  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -45,10 +43,10 @@ if (isset($_POST["cari"])) {
                         <a class="nav-link " href="obat.php">Kelola Obat</a>
                     </li>
                     <li class="nav-item ps-3 pe-3">
-                        <a class="nav-link " href="rekap.php">Rekap Pembelian</a>
+                        <a class="nav-link active" href="rekap.php">Rekap Pembelian</a>
                     </li>
                     <li class="nav-item ps-3 pe-3">
-                        <a class="nav-link active" href="beli.php">Laporan Transaksi</a>
+                        <a class="nav-link " href="beli.php">Laporan Transaksi</a>
                     </li>
                 </ul>
             </div>
@@ -58,20 +56,7 @@ if (isset($_POST["cari"])) {
 
     <!-- content  -->
     <div class="container">
-        <h1 class="mt-3 mb-3">Daftar Transaksi Pembelian Obat</h1>
-
-        <!-- search -->
-        <div class="row">
-            <div class="col-md-5">
-                <form action="" method="post">
-                    <div class="input-group mb-3">
-                        <input type="text" name="keyword" class="form-control" placeholder="Masukkan tahun-bulan-tanggal dalam angka" autocomplete="off">
-                        <button class="btn btn-warning" type="submit" name="cari">Cari</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!-- search end  -->
+        <h1 class="mt-3 mb-3">Buat Rekap Pembelian Obat</h1>
 
         <!-- table beli  -->
         <table class="table table-striped table-hover table-bordered text-center">
@@ -82,23 +67,24 @@ if (isset($_POST["cari"])) {
                     <th scope="col">Nama Obat</th>
                     <th scope="col">Jumlah Pembelian</th>
                     <th scope="col">Total harga</th>
-                    <th scope="col">Nama Pegawai</th>
+                    <th scope="col">Buat Rekap</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                foreach ($beli as $b) : ?>
+                <?php foreach ($rekap as $r) : ?>
                     <?php
                     // Menampilkan baris dengan id_pegawai NULL
-                    if ($b["id_pegawai"] !== null) {
+                    if ($r["id_pegawai"] === null) {
                     ?>
                         <tr>
-                            <td><?= $b["tgl_beli"]; ?></td>
-                            <td><?= namaPembeli($b["id_pembeli"]); ?></td>
-                            <td><?= namaObat($b["id_obat"]); ?></td>
-                            <td><?= $b["jml_beli"]; ?></td>
-                            <td><?= totalHarga($b["id_obat"]); ?></td>
-                            <td><?= namaPegawai($b["id_pegawai"]); ?></td>
+                            <td><?= $r["tgl_beli"]; ?></td>
+                            <td><?= namaPembeli($r["id_pembeli"]); ?></td>
+                            <td><?= namaObat($r["id_obat"]); ?></td>
+                            <td><?= $r["jml_beli"]; ?></td>
+                            <td><?= totalHarga($r["id_obat"]); ?></td>
+                            <td>
+                                <a class="btn btn-success mb-1" href="rekap_create.php?id_beli=<?= $r["id_beli"]; ?>" onclick="return confirm('Buat Rekap?');">Buat</a>
+                            </td>
                         </tr>
                     <?php
                     }

@@ -1,4 +1,9 @@
 <?php
+    session_start();
+    if (!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user ke halaman login
+        header("location: login_admin.php");
+        exit;
+    }
     require 'obat_functions.php';
     // ambil data di URL
     $id = $_GET["id_obat"];

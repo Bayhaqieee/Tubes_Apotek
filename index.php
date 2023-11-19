@@ -1,3 +1,11 @@
+<?php 
+session_start();
+if(!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user ke halaman login
+    header("location: login_admin.php");
+    exit;
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -25,7 +33,10 @@
                         <a class="nav-link " href="obat.php">Kelola Obat</a>
                     </li>
                     <li class="nav-item ps-3 pe-3">
-                        <a class="nav-link " href="beli.php">Laporan Pembelian</a>
+                        <a class="nav-link " href="rekap.php">Rekap Pembelian</a>
+                    </li>
+                    <li class="nav-item ps-3 pe-3">
+                        <a class="nav-link " href="beli.php">Laporan Transaksi</a>
                     </li>
                 </ul>
             </div>
