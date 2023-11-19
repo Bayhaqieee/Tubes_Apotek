@@ -45,10 +45,16 @@ if (isset($_POST["cari"])) {
                         <a class="nav-link active" href="obat.php">Kelola Obat</a>
                     </li>
                     <li class="nav-item ps-3 pe-3">
-                        <a class="nav-link " href="rekap.php">Rekap Pembelian</a>
+                        <a class="nav-link " href="rekap.php">Buat Rekap</a>
                     </li>
-                    <li class="nav-item ps-3 pe-3">
-                        <a class="nav-link " href="beli.php">Laporan Transaksi</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Laporan Transaksi
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="beli.php">Pembelian Obat</a></li>
+                            <li><a class="dropdown-item" href="supply.php">Supply Obat</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
