@@ -192,6 +192,20 @@ function getIdPegawaiFromSession() {
     return null;
 }
 
+function getUserName() {
+    if(isset($_SESSION['username'])) {
+        global $conn;
+        $username = $_SESSION['username'];
+        $query = "SELECT UPPER(nama_pegawai) AS uppercase_username FROM pegawai WHERE nama_pegawai = '$username'";
+        $result = mysqli_query($conn, $query);
+
+        if ($row = mysqli_fetch_assoc($result)) {
+            $uppercase_username = $row['uppercase_username'];
+            return $uppercase_username;
+        }
+    }
+}
+
 function rekap($id) {
     global $conn;
 

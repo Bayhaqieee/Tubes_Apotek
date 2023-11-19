@@ -4,6 +4,8 @@ if(!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user 
     header("location: login_admin.php");
     exit;
 }
+
+require 'functions.php';
 ?>
 
 <!doctype html>
@@ -45,7 +47,13 @@ if(!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user 
     <!-- navbar end  -->
 
     <!-- content  -->
-    
+    <div class="row justify-content-center align-items-center text-center mt-5 pt-5">
+        <div class="col-md-6">
+            <h1>
+                HALO <span class="text-success"><?= getUserName() ?></span>,<br>SELAMAT DATANG DI<br>HALAMAN ADMIN!
+            </h1>
+        </div>
+    </div>
     <!-- content end  -->
 
     <!-- script  -->
