@@ -96,6 +96,70 @@ function namaObat($id_obat)
     return $nama_obat;
 }
 
+function namaObatForSupply($id_obat)
+{
+    global $conn;
+    $query = "SELECT obat.nama_obat 
+                FROM supply
+                JOIN obat ON supply.id_obat = obat.id_obat
+                WHERE supply.id_obat = $id_obat;
+            ";
+    $result = mysqli_query($conn, $query);
+    $nama_obat = "";
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            if ($row) {
+                $nama_obat = $row['nama_obat'];
+            }
+        }
+    } else {
+        echo "Query error" . mysqli_error($conn);
+    }
+
+    return $nama_obat;
+}
+
+function namaSupplierForSupply($id_supplier)
+{
+    global $conn;
+    $query = "SELECT supplier.nama_supplier 
+                FROM supply
+                JOIN supplier ON supply.id_supplier = supplier.id_supplier
+                WHERE supplier.id_supplier = $id_supplier;
+            ";
+    $result = mysqli_query($conn, $query);
+    $nama_supplier = "";
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            if ($row) {
+                $nama_supplier = $row['nama_supplier'];
+            }
+        }
+    } else {
+        echo "Query error" . mysqli_error($conn);
+    }
+
+    return $nama_supplier;
+}
+
+function createSupply($data)
+{
+    global $conn;
+    // ambil data dari tiap elemen dalam form
+    $tgl_pengiriman = htmlspecialchars($data["tgl_pengiriman"]);
+    $nama_obat = htmlspecialchars($data["nama_obat"]);
+    $jumlah_obat = htmlspecialchars($data["jumlah_obat"]);
+    $nama_supplier = htmlspecialchars($data["nama_supplier"]);
+
+    // query insert data
+    $query = "INSERT INTO supply
+    VALUES
+    ('','$','$harga','$stok','$jenis')
+    ";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
 function namaPembeli($id_pembeli)
 {
     global $conn;
@@ -176,11 +240,12 @@ function searchBeli($keyword)
 }
 
 // functions.php
-function getIdPegawaiFromSession() {
+function getIdPegawaiFromSession()
+{
     if (isset($_SESSION["username"])) {
         global $conn;
         $username = $_SESSION['username'];
-        
+
         // Ambil id_pegawai dari tabel pegawai berdasarkan username
         $query = "SELECT id_pegawai FROM pegawai WHERE nama_pegawai = '$username'";
         $result = mysqli_query($conn, $query);
@@ -192,8 +257,9 @@ function getIdPegawaiFromSession() {
     return null;
 }
 
-function getUserName() {
-    if(isset($_SESSION['username'])) {
+function getUserName()
+{
+    if (isset($_SESSION['username'])) {
         global $conn;
         $username = $_SESSION['username'];
         $query = "SELECT UPPER(nama_pegawai) AS uppercase_username FROM pegawai WHERE nama_pegawai = '$username'";
@@ -206,7 +272,8 @@ function getUserName() {
     }
 }
 
-function rekap($id) {
+function rekap($id)
+{
     global $conn;
 
     $id_pegawai = getIdPegawaiFromSession();
@@ -220,4 +287,8 @@ function rekap($id) {
     return 0;
 }
 
-
+function currentDate()
+{
+    $tanggalSekarang = date("Y-m-d");
+    return $tanggalSekarang;
+}
