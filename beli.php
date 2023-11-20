@@ -103,7 +103,7 @@ if (isset($_POST["cari"])) {
                             <td><?= namaPembeli($b["id_pembeli"]); ?></td>
                             <td><?= namaObat($b["id_obat"]); ?></td>
                             <td><?= $b["jml_beli"]; ?></td>
-                            <td><?= totalHarga($b["id_obat"]); ?></td>
+                            <td><?= totalHarga($b["jml_beli"]); ?></td>
                             <td><?= namaPegawai($b["id_pegawai"]); ?></td>
                         </tr>
                     <?php

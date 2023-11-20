@@ -142,13 +142,13 @@ function namaPegawai($id_pegawai)
     return $nama_pegawai;
 }
 
-function totalHarga($id_obat)
+function totalHarga($jml_beli)
 {
     global $conn;
     $query = "SELECT SUM(beli.jml_beli * obat.harga_obat) AS total_harga
                 FROM beli
                 JOIN obat ON beli.id_obat = obat.id_obat
-                WHERE beli.id_obat = $id_obat;
+                WHERE beli.jml_beli = $jml_beli;
             ";
 
     $result = mysqli_query($conn, $query);
