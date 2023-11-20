@@ -70,7 +70,7 @@ if (isset($_POST["submit"])) {
                         </div>
                         <div class="mb-3">
                             <label for="nama_supplier" class="form-label">Nama Supplier</label>
-                            <input type="text" class="form-control" name="nama_supplier" id="nama_supplier" placeholder="obat keras/bebas/bebas terbatas" required>
+                            <input type="text" class="form-control" name="nama_supplier" id="nama_supplier" required>
                         </div>
                         <button type="submit" name="submit" class="btn btn-success">Tambah data</button>
                     </form>

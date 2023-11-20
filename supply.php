@@ -65,7 +65,7 @@ if (isset($_POST["cari"])) {
     <!-- content  -->
     <div class="container">
         <h1 class="mt-3 mb-3">Daftar Supply Obat</h1>
-        <a class="btn btn-outline-success mb-3" href="obat_create.php"><i class="bi bi-plus-square-fill"></i> Tambah rekap supply</a>
+        <a class="btn btn-outline-success mb-3" href="supply_create.php"><i class="bi bi-plus-square-fill"></i> Tambah rekap supply</a>
 
         <!-- table obat  -->
         <table class="table table-striped table-hover table-bordered text-center">

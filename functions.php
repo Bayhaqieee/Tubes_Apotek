@@ -154,7 +154,7 @@ function createSupply($data)
     // query insert data
     $query = "INSERT INTO supply
     VALUES
-    ('','$','$harga','$stok','$jenis')
+    ('','$tgl_pengiriman','$jumlah_obat','$nama_supplier','$nama_obat')
     ";
     mysqli_query($conn, $query);
 
