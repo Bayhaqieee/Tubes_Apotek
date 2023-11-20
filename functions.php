@@ -359,3 +359,68 @@ function getIdSupplierByNama($nama_supplier)
 
     return null;
 }
+
+function createSupplier($data) 
+{
+    global $conn;
+    // ambil data dari tiap elemen dalam form
+    $nama_supplier = htmlspecialchars($data["nama_supplier"]);
+    $no_telp = htmlspecialchars($data["no_telp"]);
+    $alamat_supplier = htmlspecialchars($data["alamat_supplier"]);
+
+    // query insert data
+    $query = "INSERT INTO supplier
+    VALUES
+    ('','$nama_supplier','$no_telp','$alamat_supplier')
+    ";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+function searchSupplier($keyword)
+{
+    $query = "SELECT * FROM supplier 
+                WHERE 
+                nama_supplier LIKE '%$keyword%' OR
+                no_telp LIKE '%$keyword%' OR
+                alamat_supplier LIKE '%$keyword%'
+            ";
+    return query($query);
+}
+
+function updateSupplier($data)
+{
+    global $conn;
+    // ambil data dari tiap elemen dalam form
+    $id = $data["id_supplier"];
+    $nama_supplier = htmlspecialchars($data["nama_supplier"]);
+    $no_telp = htmlspecialchars($data["no_telp"]);
+    $alamat_supplier = htmlspecialchars($data["alamat_supplier"]);
+
+    //query update data
+    $query = "UPDATE supplier SET
+                nama_supplier = '$nama_supplier',
+                no_telp = '$no_telp',
+                alamat_supplier = '$alamat_supplier'
+            WHERE id_supplier = $id
+            ";
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function deleteSupplier($id)
+{
+    global $conn;
+    mysqli_query($conn, "DELETE FROM supplier WHERE id_supplier=$id");
+    return mysqli_affected_rows($conn);
+}
+
+function searchSupply($keyword)
+{
+    $query = "SELECT * FROM supply
+                WHERE 
+                tgl_pengiriman LIKE '%$keyword%'
+            ";
+    return query($query);
+}
