@@ -5,7 +5,7 @@ if(!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user 
     exit;
 }
 require 'functions.php';
-$supply = query("SELECT * FROM supply"); 
+$supply = query("SELECT * FROM supply ORDER BY id_pengiriman DESC"); 
 
 // jika tombol cari di klik
 if (isset($_POST["cari"])) {

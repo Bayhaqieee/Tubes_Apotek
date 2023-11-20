@@ -292,3 +292,70 @@ function currentDate()
     $tanggalSekarang = date("Y-m-d");
     return $tanggalSekarang;
 }
+
+function getNamaObat()
+{
+    global $conn;
+    // Query untuk mendapatkan nama obat dari tabel obat
+    $query = "SELECT id_obat, nama_obat FROM obat ORDER BY nama_obat ASC";
+    $result = mysqli_query($conn, $query);
+
+    // Simpan nama-nama obat ke dalam array
+    $nama_obat = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $nama_obat[] = $row['nama_obat'];
+    }
+    return $nama_obat;
+}
+
+function getIdObatByNama($nama_obat)
+{
+    global $conn;
+
+    // Pastikan nama obat yang diberikan bersih dari SQL Injection
+    $nama_obat = mysqli_real_escape_string($conn, $nama_obat);
+
+    // Query untuk mendapatkan id_obat berdasarkan nama obat
+    $query = "SELECT id_obat FROM obat WHERE nama_obat = '$nama_obat'";
+    $result = mysqli_query($conn, $query);
+
+    if ($row = mysqli_fetch_assoc($result)) {
+        return $row['id_obat'];
+    }
+
+    return null;
+}
+
+
+function getNamaSupplier()
+{
+    global $conn;
+    // Query untuk mendapatkan nama obat dari tabel obat
+    $query = "SELECT id_supplier, nama_supplier FROM supplier ORDER BY nama_supplier ASC";
+    $result = mysqli_query($conn, $query);
+
+    // Simpan nama-nama obat ke dalam array
+    $nama_supplier = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $nama_supplier[] = $row['nama_supplier'];
+    }
+    return $nama_supplier;
+}
+
+function getIdSupplierByNama($nama_supplier)
+{
+    global $conn;
+
+    // Pastikan nama obat yang diberikan bersih dari SQL Injection
+    $nama_supplier = mysqli_real_escape_string($conn, $nama_supplier);
+
+    // Query untuk mendapatkan id_obat berdasarkan nama obat
+    $query = "SELECT id_supplier FROM supplier WHERE nama_supplier = '$nama_supplier'";
+    $result = mysqli_query($conn, $query);
+
+    if ($row = mysqli_fetch_assoc($result)) {
+        return $row['id_supplier'];
+    }
+
+    return null;
+}

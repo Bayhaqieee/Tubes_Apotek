@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user ke halaman login
+if (!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user ke halaman login
     header("location: login_admin.php");
     exit;
 }
@@ -62,7 +62,14 @@ if (isset($_POST["submit"])) {
                         </div>
                         <div class="mb-3">
                             <label for="nama_obat" class="form-label">Nama Obat</label>
-                            <input type="text" class="form-control" name="nama_obat" id="nama_obat" required>
+                            <select class="form-select" aria-label="Default select example" name="nama_obat" id="nama_obat" required>
+                                <option selected>Pilih Obat</option>
+                                <?php $nama_obat = getNamaObat() ?>
+                                <?php foreach ($nama_obat as $obat) : ?>
+                                    <?php $id_obat = getIdObatByNama($obat); ?>
+                                    <option value="<?= $id_obat; ?>"><?= $obat; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="jumlah_obat" class="form-label">Jumlah</label>
@@ -70,7 +77,15 @@ if (isset($_POST["submit"])) {
                         </div>
                         <div class="mb-3">
                             <label for="nama_supplier" class="form-label">Nama Supplier</label>
-                            <input type="text" class="form-control" name="nama_supplier" id="nama_supplier" required>
+                            <select class="form-select" aria-label="Default select example" name="nama_supplier" id="nama_supplier" required required>
+                                <option selected>Pilih Supplier</option>
+                                <?php $nama_supplier = getNamaSupplier() ?>
+                                <?php foreach ($nama_supplier as $supplier) : ?>
+                                    <?php $id_supplier = getIdSupplierByNama($supplier); ?>
+                                    <option value="<?= $id_supplier; ?>"><?= $supplier; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <!-- <input type="text" class="form-control" name="nama_supplier" id="nama_supplier" required> -->
                         </div>
                         <button type="submit" name="submit" class="btn btn-success">Tambah data</button>
                     </form>
