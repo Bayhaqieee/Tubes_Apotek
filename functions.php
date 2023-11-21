@@ -209,7 +209,7 @@ function namaPegawai($id_pegawai)
 function totalHarga($jml_beli)
 {
     global $conn;
-    $query = "SELECT SUM(beli.jml_beli * obat.harga_obat) AS total_harga
+    $query = "SELECT (beli.jml_beli * obat.harga_obat) AS total_harga
                 FROM beli
                 JOIN obat ON beli.id_obat = obat.id_obat
                 WHERE beli.jml_beli = $jml_beli;
