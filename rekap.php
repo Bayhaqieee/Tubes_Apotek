@@ -87,7 +87,7 @@ $rekap = query("SELECT * FROM beli ORDER BY tgl_beli DESC "); // ORDER BY ASC(me
                             <td><?= namaPembeli($r["id_pembeli"]); ?></td>
                             <td><?= namaObat($r["id_obat"]); ?></td>
                             <td><?= $r["jml_beli"]; ?></td>
-                            <td><?= totalHarga($r["id_obat"]); ?></td>
+                            <td><?= totalHarga($r["jml_beli"]); ?></td>
                             <td>
                                 <a class="btn btn-success mb-1" href="rekap_create.php?id_beli=<?= $r["id_beli"]; ?>" onclick="return confirm('Buat Rekap?');">Buat</a>
                             </td>
