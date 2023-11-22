@@ -25,10 +25,10 @@
                         <a class="nav-link " href="pembeli_toko.php">Toko Obat</a>
                     </li>
                     <li class="nav-item ps-3 pe-3">
-                        <a class="nav-link active" href="pembeli_riwayat.php">Riwayat</a>
+                        <a class="nav-link " href="pembeli_riwayat.php">Riwayat</a>
                     </li>
                     <li class="nav-item ps-3 pe-3">
-                        <a class="nav-link " href="pembeli_kontak.php">Kontak</a>
+                        <a class="nav-link active" href="pembeli_kontak.php">Kontak</a>
                     </li>
                     <li class="nav-item ps-3 pe-3">
                         <form action="logout_user.php" method="post">
