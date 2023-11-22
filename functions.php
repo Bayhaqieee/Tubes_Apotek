@@ -208,18 +208,38 @@ function namaPegawai($id_pegawai)
     return $nama_pegawai;
 }
 
-function totalHarga($jml_beli)
+// function totalHarga($jml_beli)
+// {
+//     global $conn;
+//     $query = "SELECT beli.jml_beli * obat.harga_obat AS total_harga
+//                 FROM beli
+//                 JOIN obat ON beli.id_obat = obat.id_obat
+//                 WHERE beli.jml_beli = $jml_beli;
+//             ";
+//     $result = mysqli_query($conn, $query);
+//     $total_harga=0;
+//     if ($result) {
+//         $row = mysqli_fetch_assoc($result);
+//         if ($row) {
+//             $total_harga = $row['total_harga'];
+//         }
+//     } else {
+//         echo "Query error: " . mysqli_error($conn);
+//     }
+
+//     return $total_harga;
+// }
+
+function totalHarga($id_obat, $jml_beli)
 {
     global $conn;
-    $query = "SELECT beli.jml_beli * obat.harga_obat AS total_harga
+    $query = "SELECT (beli.jml_beli * obat.harga_obat) AS total_harga
                 FROM beli
                 JOIN obat ON beli.id_obat = obat.id_obat
-                WHERE beli.jml_beli = $jml_beli;
+                WHERE beli.id_obat = $id_obat AND beli.jml_beli = $jml_beli;
             ";
-
     $result = mysqli_query($conn, $query);
-    $total_harga=0;
-
+    $total_harga = 0;
     if ($result) {
         $row = mysqli_fetch_assoc($result);
         if ($row) {
@@ -231,6 +251,7 @@ function totalHarga($jml_beli)
 
     return $total_harga;
 }
+
 
 function searchBeli($keyword)
 {

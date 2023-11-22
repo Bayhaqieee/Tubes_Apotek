@@ -83,7 +83,7 @@ $beli = query("SELECT * FROM beli ORDER BY tgl_beli DESC "); // ORDER BY ASC(men
                             <td><?= $b["tgl_beli"] ?></td>
                             <td><?= namaObat($b["id_obat"]); ?></td>
                             <td><?= $b["jml_beli"]; ?></td>
-                            <td><?= totalHarga($b["jml_beli"]); ?></td>
+                            <td><?= totalHarga($b["id_obat"], $b["jml_beli"]); ?></td>
                         </tr>
                     <?php
                     }
