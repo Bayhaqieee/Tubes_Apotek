@@ -1,9 +1,9 @@
 <?php
-session_start(); 
-if(isset($_SESSION["login"])) {
-    header("Location: pembeli.php");
+session_start();
+if(!isset($_SESSION["login_pembeli"])) { // jika tidak ada sesi login maka tendang user ke halaman login
+    header("location: login_user.php");
     exit;
-} 
+}
 
 require 'functions.php';
 ?>
@@ -40,6 +40,11 @@ require 'functions.php';
                     <li class="nav-item ps-3 pe-3">
                         <a class="nav-link " href="pembeli_kontak.php">Kontak</a>
                     </li>
+                    <li class="nav-item ps-3 pe-3">
+                        <form action="logout_user.php" method="post">
+                            <button class="btn btn-success" type="submit" name="logout" onclick="return confirm('Keluar?');">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -51,13 +56,13 @@ require 'functions.php';
         <div class="row mt-5 justify-content-center">
             <div class="col-md-5">
                 <h1>
-                    Selamat Datang <span class="text-success"><?= getUserName() ?></span>!
+                    Selamat Datang <span class="text-success"><?= getUserPembeli() ?></span>!
                 </h1>
                 <p class="fw-medium">Apapun keluhannya, beli obat di <span class="text-success fw-bold">YPTA</span><span class="fw-bold">potek</span>!</p>
                 <div class="card" style="width: 14rem;">
                     <img src="img/toko obat.jpg" class="card-img-top" alt="toko obat">
                     <div class="card-body text-center">
-                        <a href="toko.php" class="btn btn-outline-success">Beli Obat Sekarang!</a>
+                        <a href="pembeli_toko.php" class="btn btn-outline-success">Beli Obat Sekarang!</a>
                     </div>
                 </div>
             </div>

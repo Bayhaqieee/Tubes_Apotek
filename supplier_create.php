@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user ke halaman login
+if(!isset($_SESSION["login_admin"])) { // jika tidak ada sesi login maka tendang user ke halaman login
     header("location: login_admin.php");
     exit;
 }

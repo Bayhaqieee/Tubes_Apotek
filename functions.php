@@ -32,6 +32,8 @@ function create($data)
     return mysqli_affected_rows($conn);
 }
 
+
+
 function delete($id)
 {
     global $conn;
@@ -239,12 +241,12 @@ function searchBeli($keyword)
     return query($query);
 }
 
-// functions.php
+// functions.phpsession
 function getIdPegawaiFromSession()
 {
-    if (isset($_SESSION["username"])) {
+    if (isset($_SESSION["username_admin"])) {
         global $conn;
-        $username = $_SESSION['username'];
+        $username = $_SESSION['username_admin'];
 
         // Ambil id_pegawai dari tabel pegawai berdasarkan username
         $query = "SELECT id_pegawai FROM pegawai WHERE nama_pegawai = '$username'";
@@ -259,10 +261,41 @@ function getIdPegawaiFromSession()
 
 function getUserName()
 {
-    if (isset($_SESSION['username'])) {
+    if (isset($_SESSION['username_admin'])) {
         global $conn;
-        $username = $_SESSION['username'];
+        $username = $_SESSION['username_admin'];
         $query = "SELECT UPPER(nama_pegawai) AS uppercase_username FROM pegawai WHERE nama_pegawai = '$username'";
+        $result = mysqli_query($conn, $query);
+
+        if ($row = mysqli_fetch_assoc($result)) {
+            $uppercase_username = $row['uppercase_username'];
+            return $uppercase_username;
+        }
+    }
+}
+
+function getIdPembeliFromSession()
+{
+    if (isset($_SESSION["username_pembeli"])) {
+        global $conn;
+        $username = $_SESSION['username_pembeli'];
+
+        $query = "SELECT id_pembeli FROM pembeli WHERE nama_pembeli = '$username'";
+        $result = mysqli_query($conn, $query);
+
+        if ($row = mysqli_fetch_assoc($result)) {
+            return $row['id_pembeli'];
+        }
+    }
+    return null;
+}
+
+function getUserPembeli()
+{
+    if (isset($_SESSION['username_pembeli'])) {
+        global $conn;
+        $username = $_SESSION['username_pembeli'];
+        $query = "SELECT UPPER(nama_pembeli) AS uppercase_username FROM pembeli WHERE nama_pembeli = '$username'";
         $result = mysqli_query($conn, $query);
 
         if ($row = mysqli_fetch_assoc($result)) {
@@ -424,3 +457,83 @@ function searchSupply($keyword)
             ";
     return query($query);
 }
+
+function createBeli($data)
+{
+    global $conn;
+    // ambil data dari tiap elemen dalam form
+    $tgl_beli = htmlspecialchars(date("Y-m-d"));
+    $jml_beli = htmlspecialchars($data["jml_beli"]);
+    $id_obat = htmlspecialchars(getIdObatByNama($data["nama_obat"]));
+    $id_pembeli = htmlspecialchars(getIdPembeliFromSession());
+
+    // query insert data
+    $query = "INSERT INTO beli (id_beli,tgl_beli, jml_beli, id_obat, id_pembeli)
+    VALUES
+    ('','$tgl_beli','$jml_beli','$id_obat', '$id_pembeli')
+    ";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+// Fungsi untuk mendapatkan stok obat dari database
+function getStokObat($id_obat) {
+    global $conn;
+
+    $query = "SELECT stok_obat FROM obat WHERE id_obat = $id_obat";
+    $result = mysqli_query($conn, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        return $row['stok_obat'];
+    } else {
+        return 0; // Jika stok tidak ditemukan, kembalikan nilai 0
+    }
+}
+
+// Memeriksa jumlah beli yang diinputkan
+function checkJumlahBeli($id_obat, $jumlah_beli) {
+    $stok_obat = getStokObat($id_obat); // Mendapatkan stok obat dari fungsi sebelumnya
+
+    if ($jumlah_beli > $stok_obat) {
+        // Jika jumlah beli melebihi stok obat, kembalikan stok obat sebagai batas maksimal
+        return $stok_obat;
+    } else {
+        return $jumlah_beli; // Jika tidak, kembalikan jumlah beli yang dimasukkan
+    }
+}
+
+function register($data) {
+    global $conn;
+
+    $username = stripslashes($data["nama_pembeli"]); // fungsi stripslashes untuk menghilangkan slash
+    $alamat = stripslashes($data["alamat"]);
+    $password = mysqli_real_escape_string($conn, $data["password"]); // fungsi mysqli_real_escape_string() memungkinkan user menambahkan tanda kutip dan masuk ke database
+    $password2 = mysqli_real_escape_string($conn, $data["password2"]);
+
+    // cek username sudah ada atau belum
+    $result = mysqli_query($conn, "SELECT nama_pembeli FROM pembeli WHERE nama_pembeli = '$username'");
+    
+    if(mysqli_fetch_assoc($result)){
+        echo "<script>
+                alert('Username sudah ada! Silahkan pilih nama lain');
+            </script>";
+        return false;
+    }
+
+    // cek konfrimasi password
+    if($password != $password2) {
+        echo "<script>
+                alert('Konfirmasi password tidak sesuai!');
+            </script>";
+        return false;
+    }
+    
+    // tambahkan user baru ke database
+    mysqli_query($conn, "INSERT INTO pembeli VALUES('','$username','$alamat','$password')");
+
+    return mysqli_affected_rows($conn); // untuk menghasilkan 1 jika berhasil dan -1 jika tidak berhasil
+
+}
+

@@ -1,9 +1,9 @@
 <?php
-// session_start();
-// if (!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user ke halaman login
-//     header("location: login_user.php");
-//     exit;
-// }
+session_start();
+if (!isset($_SESSION["login_pembeli"])) { // jika tidak ada sesi login maka tendang user ke halaman login
+    header("location: login_user.php");
+    exit;
+}
 
 require 'functions.php';
 $beli = query("SELECT * FROM beli ORDER BY tgl_beli DESC ");
@@ -11,7 +11,7 @@ $obat = query("SELECT * FROM obat ORDER BY nama_obat ASC "); // ORDER BY ASC(men
 
 // jika tombol cari di klik
 if (isset($_POST["cari"])) {
-        $obat = search($_POST["keyword"]);
+    $obat = search($_POST["keyword"]);
 }
 
 ?>
@@ -22,7 +22,7 @@ if (isset($_POST["cari"])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin page</title>
+    <title>Toko</title>
 
     <!-- bootstrap  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -53,6 +53,11 @@ if (isset($_POST["cari"])) {
                     <li class="nav-item ps-3 pe-3">
                         <a class="nav-link " href="pembeli_kontak.php">Kontak</a>
                     </li>
+                    <li class="nav-item ps-3 pe-3">
+                        <form action="logout_user.php" method="post">
+                            <button class="btn btn-success" type="submit" name="logout" onclick="return confirm('Keluar?');">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -61,45 +66,9 @@ if (isset($_POST["cari"])) {
 
     <!-- content  -->
     <section class="container">
-        <h3 class="mt-3 mb-3"><i class="bi bi-cart4"></i> Keranjang Pembelian </h3>
-
-        <!-- table beli  -->
-        <table class="table table-striped table-hover table-bordered text-center mb-5">
-            <thead>
-                <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Nama Obat</th>
-                    <th scope="col">Jumlah Pembelian</th>
-                    <!-- <th scope="col">Total harga</th> -->
-                </tr>
-            </thead>
-            <tbody>
-                <?php $i = 1; ?>
-                <?php foreach ($beli as $b) : ?>
-                    <?php
-                    // Menampilkan baris dengan id_pegawai NULL
-                    if ($b["id_pembeli"] === null) {
-                    ?>
-                        <tr>
-                            <td><?= $i; ?></td>
-                            <td><?= namaObat($b["id_obat"]); ?></td>
-                            <td><?= $b["jml_beli"]; ?></td>
-                            <!-- <td><?= totalHarga($b["jml_beli"]); ?></td> -->
-                        </tr>
-                        <?php $i++; ?>
-                    <?php
-                    }
-                    ?>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        </div>
-        <!-- table beli end  -->
-
-        <hr>
 
         <!-- search -->
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-md-3">
                 <form action="" method="post">
                     <div class="input-group mb-3">
@@ -109,12 +78,6 @@ if (isset($_POST["cari"])) {
                 </form>
             </div>
         </div>
-
-        <!-- if not search  -->
-        <?php if (isset($error)) : ?>
-            <p class="fs-3 fw-medium">Maaf, Obat belum/tidak tersedia.</p>
-        <?php endif; ?>
-        <!-- if not search end  -->
         <!-- search end  -->
 
         <div class="row mt-4">
@@ -127,7 +90,7 @@ if (isset($_POST["cari"])) {
                                     <h5 class="card-title"><?= $o["nama_obat"]; ?></h5>
                                     <p class="card-text">Harga: Rp<?= $o["harga_obat"]; ?></p>
                                     <p class="card-text">Stok: <?= $o["stok_obat"]; ?></p>
-                                    <a href="#" class="btn btn-success">Beli</a>
+                                    <a class="btn btn-success mb-1" href="pembeli_beli.php?id_obat=<?= $o["id_obat"]; ?>">Beli</a>
                                 </div>
                             </div>
                         </div>
@@ -143,6 +106,9 @@ if (isset($_POST["cari"])) {
 
     <!-- script  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- script lokal  -->
+    <!-- <script src="js/pembeli_toko.js"></script> -->
 </body>
 
 </html>

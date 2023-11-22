@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user ke halaman login
+if(!isset($_SESSION["login_admin"])) { // jika tidak ada sesi login maka tendang user ke halaman login
     header("location: login_admin.php");
     exit;
 }
@@ -9,7 +9,6 @@ require 'functions.php';
 // ambil data di URL
 $id = $_GET["id_obat"];
 
-// query data kru berdasarkan id
 $obat = query("SELECT * FROM obat WHERE id_obat = $id")[0];
 
 // cek apakah tombol submit sudah ditekan atau belum

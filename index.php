@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user ke halaman login
+if (!isset($_SESSION["login_admin"])) { // jika tidak ada sesi login maka tendang user ke halaman login
     header("location: login_admin.php");
     exit;
 }
@@ -45,6 +45,11 @@ require 'functions.php';
                             <li><a class="dropdown-item" href="beli.php">Pembelian Obat</a></li>
                             <li><a class="dropdown-item" href="supply.php">Supply Obat</a></li>
                         </ul>
+                    </li>
+                    <li class="nav-item ps-3 pe-3">
+                        <form action="logout_admin.php" method="post">
+                            <button class="btn btn-success" type="submit" name="logout" onclick="return confirm('Keluar?');">Logout</button>
+                        </form>
                     </li>
                 </ul>
             </div>

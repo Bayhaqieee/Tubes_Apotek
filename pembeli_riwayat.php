@@ -1,9 +1,9 @@
 <?php
-// session_start();
-// if (!isset($_SESSION["login"])) { // jika tidak ada sesi login maka tendang user ke halaman login
-//     header("location: login_user.php");
-//     exit;
-// }
+session_start();
+if (!isset($_SESSION["login_pembeli"])) { // jika tidak ada sesi login maka tendang user ke halaman login
+    header("location: login_user.php");
+    exit;
+}
 
 require 'functions.php';
 $beli = query("SELECT * FROM beli ORDER BY tgl_beli DESC "); // ORDER BY ASC(mengurutkan dari paling kecil ke besar) | DESC(mengurutkan dari id paling besar ke kecil)
@@ -52,6 +52,11 @@ if (isset($_POST["cari"])) {
                     <li class="nav-item ps-3 pe-3">
                         <a class="nav-link " href="pembeli_kontak.php">Kontak</a>
                     </li>
+                    <li class="nav-item ps-3 pe-3">
+                        <form action="logout_user.php" method="post">
+                            <button class="btn btn-success" type="submit" name="logout" onclick="return confirm('Keluar?');">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -76,12 +81,18 @@ if (isset($_POST["cari"])) {
             </thead>
             <tbody>
                 <?php foreach ($beli as $b) : ?>
-                    <tr>
-                        <td><?= $b["tgl_beli"] ?></td>
-                        <td><?= namaObat($b["id_obat"]); ?></td>
-                        <td><?= $b["jml_beli"]; ?></td>
-                        <td><?= totalHarga($b["jml_beli"]); ?></td>
-                    </tr>
+                    <?php
+                    if ($b["id_pembeli"] === getIdPembeliFromSession()) {
+                    ?>
+                        <tr>
+                            <td><?= $b["tgl_beli"] ?></td>
+                            <td><?= namaObat($b["id_obat"]); ?></td>
+                            <td><?= $b["jml_beli"]; ?></td>
+                            <td><?= totalHarga($b["jml_beli"]); ?></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
