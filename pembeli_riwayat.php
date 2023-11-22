@@ -8,11 +8,6 @@ if (!isset($_SESSION["login_pembeli"])) { // jika tidak ada sesi login maka tend
 require 'functions.php';
 $beli = query("SELECT * FROM beli ORDER BY tgl_beli DESC "); // ORDER BY ASC(mengurutkan dari paling kecil ke besar) | DESC(mengurutkan dari id paling besar ke kecil)
 
-// jika tombol cari di klik
-if (isset($_POST["cari"])) {
-    $obat = search($_POST["keyword"]);
-}
-
 ?>
 
 <!doctype html>

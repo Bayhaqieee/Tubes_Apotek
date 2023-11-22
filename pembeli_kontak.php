@@ -72,7 +72,7 @@
                     <div class="card mb-3 me-2" style="max-width: 540px;">
                         <div class="row g-0">
                             <div class="col-md-4">
-                                <img src="-.jpg" class="img-fluid rounded-start" alt="adit">
+                                <img src="img/adit.png" class="img-fluid rounded-start" alt="adit">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
