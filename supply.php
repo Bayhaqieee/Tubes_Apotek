@@ -73,7 +73,7 @@ if (isset($_POST["cari"])) {
 
         <!-- search -->
         <div class="row mb-3">
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <form action="" method="post">
                     <div class="input-group">
                         <input type="text" name="keyword" class="form-control" placeholder="Masukkan tahun-bulan-tanggal dalam angka" autocomplete="off">
